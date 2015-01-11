@@ -42,16 +42,15 @@ t_nation return_nation () { //returns a random nation.
 	if (tmp<0.86) { //ardesian: 86%
 		return ARDESIAN;
 	} else if (tmp<0.91) { //slebrian: 5%
-		return SLEBRIAN;     //temporarily limited functionality for the sake of missing name lists
-	}/* else if (tmp<0.94) { //wallarish: 3%
+		return SLEBRIAN;
+	} else if (tmp<0.94) { //wallarish: 3%
 		return WALLARISH;
 	} else if (tmp<0.96) { //totnan: 2%
 		return TOTNAN;
 	} else if (tmp<0.98) { //ussairic: 2%
 		return USSAIRIC;
-	}*/ else { //sinpouri: 2%
-		//return SINPOURI;
-		return SLEBRIAN;
+	} else { //sinpouri: 2%
+		return SINPOURI;
 	}
 }
 
@@ -116,13 +115,13 @@ void generate_person( person *target ) { //creates a random person
 			strcpy(lname, extract_from_list(LIST_LAST_ARD));
 		} else if ((*target).nation == SLEBRIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_SLE));
-			strcpy(lname,  extract_from_list(LIST_LAST_SLE));
+			strcpy(lname, extract_from_list(LIST_LAST_SLE));
 		} else if ((*target).nation == TOTNAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_TOT));
-			strcpy(lname,  extract_from_list(LIST_LAST_TOT));
+			strcpy(lname, extract_from_list(LIST_LAST_TOT));
 		} else if ((*target).nation == WALLARISH) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_WAL));
-			strcpy(lname,  extract_from_list(LIST_LAST_WAL));
+			strcpy(lname, extract_from_list(LIST_LAST_WAL));
 		} else if ((*target).nation == USSAIRIC) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_USS));
 			if (take_chance(0.4)) {
@@ -141,14 +140,14 @@ void generate_person( person *target ) { //creates a random person
 			strcpy(lname, extract_from_list(LIST_LAST_ARD));
 		} else if ((*target).nation == SLEBRIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_SLE));
-			strcpy(lname,  extract_from_list(LIST_LAST_SLE));
+			strcpy(lname, extract_from_list(LIST_LAST_SLE));
 			strcat(lname, "a");
 		} else if ((*target).nation == TOTNAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_TOT));
-			strcpy(lname,  extract_from_list(LIST_LAST_TOT));
+			strcpy(lname, extract_from_list(LIST_LAST_TOT));
 		} else if ((*target).nation == WALLARISH) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_WAL));
-			strcpy(lname,  extract_from_list(LIST_LAST_WAL));
+			strcpy(lname, extract_from_list(LIST_LAST_WAL));
 		} else if ((*target).nation == USSAIRIC) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_USS));
 			strcpy(lname, extract_from_list(LIST_LAST_USS));
