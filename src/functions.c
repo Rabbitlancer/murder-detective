@@ -1,12 +1,12 @@
 #include "functions.h"
 
-float return_rand () {
+float return_rand () { //returns a float between 0 and 1
 	uint8_t base_token = 0;
 	RAND_bytes((unsigned char *)&base_token, sizeof(base_token));
 	return (float)((float)base_token / 256);
 }
 
-int take_chance (float chance) {
+int take_chance (float chance) { //takes a chance between 0 and 1
 	if ((chance - return_rand()) < 0) {
 		return 0;
 	} else {
@@ -29,27 +29,27 @@ float rand_weighted (int low_bound, int high_bound, int weight) {
 */
 	//return res;
 	return 0.0;
-}
+} //not working weighted random
 
-int rand_val ( int min, int max ) {
+int rand_val ( int min, int max ) { //returns an integer between min and max
 	int delta = ( max - min ), res = 0;
 	res = return_rand()*delta+min;
 	return res;
 }
 
-t_nation return_nation () {
+t_nation return_nation () { //returns a random nation.
 	float tmp = return_rand();
-	if (tmp<0.86) {
+	if (tmp<0.86) { //ardesian: 86%
 		return ARDESIAN;
-	} else if (tmp<0.91) {
-		return SLEBRIAN;
-	}/* else if (tmp<0.94) {
+	} else if (tmp<0.91) { //slebrian: 5%
+		return SLEBRIAN;     //temporarily limited functionality for the sake of missing name lists
+	}/* else if (tmp<0.94) { //wallarish: 3%
 		return WALLARISH;
-	} else if (tmp<0.96) {
+	} else if (tmp<0.96) { //totnan: 2%
 		return TOTNAN;
-	} else if (tmp<0.98) {
+	} else if (tmp<0.98) { //ussairic: 2%
 		return USSAIRIC;
-	}*/ else {
+	}*/ else { //sinpouri: 2%
 		//return SINPOURI;
 		return SLEBRIAN;
 	}
@@ -77,7 +77,7 @@ char *gender_to_string( t_gender gnd ) {
 	} else return "female";
 }
 
-char *extract_from_list ( char *list_path ) {
+char *extract_from_list ( char *list_path ) { //chooses a random name from the list
 	printf("TEST 3");
 	FILE *fp;
 	fp = fopen(list_path, "r");
@@ -101,7 +101,7 @@ char *extract_from_list ( char *list_path ) {
 	return str;
 }
 
-void generate_person( person *target ) {
+void generate_person( person *target ) { //creates a random person
 	printf("TEST 1");
 	(*target).nation = return_nation();
 	char *fname = NULL;
@@ -161,7 +161,7 @@ void generate_person( person *target ) {
 	strcpy((*target).last_name,lname);
 }
 
-char *describe_person( person *guy ) {
+char *describe_person( person *guy ) { //makes an output string out of person (like "John Doe, Ardesian male")
 	char *str = NULL;
 
 	str = (char *)calloc(100,sizeof(char));
