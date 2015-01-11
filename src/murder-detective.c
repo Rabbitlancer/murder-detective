@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
 	}
 
 	for (int i = 0; i<100; i++) {
-		generate_person(population[i]);
+		generate_person(&(population[i]));
 		printf("%s\n",describe_person(&(population[i])));
 	}
 
