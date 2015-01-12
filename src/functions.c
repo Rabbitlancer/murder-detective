@@ -76,32 +76,29 @@ char *gender_to_string( t_gender gnd ) {
 	} else return "female";
 }
 
-char *extract_from_list ( char *list_path ) { //chooses a random name from the list
-	printf("TEST 3");
-	FILE *fp;
+char *extract_from_list ( const char *list_path ) { //chooses a random name from the list
+	FILE *fp = NULL;
 	fp = fopen(list_path, "r");
+	if (fp == NULL) exit(-1);
 
 	char *str = NULL;
-	str=(char *)calloc(20, sizeof(char));
+	str=(char *)calloc(64, sizeof(char));
+	if (str == NULL) exit(-1);
 
-	char *lenstr = NULL;
-	lenstr=(char *)calloc(10, sizeof(char));
 	int len;
-	fscanf(fp,"%d",&lenstr);
-	len = atoi(lenstr);
-	len = rand_val(0,len+1);
+	fscanf(fp,"%d",&len);
+	len = rand_val(1,len+1);
 	for (int i = 0; i<len; i++) {
-		fscanf(fp,"%s",&str);
+		strcpy(str,"");
+		fscanf(fp,"%s",str);
 	}
 
 	fclose(fp);
 
-	printf("TEST 4");
 	return str;
 }
 
 void generate_person( person *target ) { //creates a random person
-	printf("TEST 1");
 	(*target).nation = return_nation();
 	char *fname = NULL;
 	fname=(char *)calloc(20,sizeof(char));
@@ -109,10 +106,12 @@ void generate_person( person *target ) { //creates a random person
 	lname=(char *)calloc(20,sizeof(char));
 	if (take_chance(0.5)) {
 		(*target).gender = MALE;
-		printf("TEST 2");
 		if ((*target).nation == ARDESIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_ARD));
-			strcpy(lname, extract_from_list(LIST_LAST_ARD));
+			if (take_chance(0.1)) {
+				strcpy(lname, "Mc");
+			} else strcpy(lname, "");
+			strcat(lname, extract_from_list(LIST_LAST_ARD));
 		} else if ((*target).nation == SLEBRIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_MALE_SLE));
 			strcpy(lname, extract_from_list(LIST_LAST_SLE));
@@ -133,11 +132,13 @@ void generate_person( person *target ) { //creates a random person
 			strcpy(lname, extract_from_list(LIST_LAST_SIN));
 		}
 	} else {
-		printf("TEST 2");
 		(*target).gender = FEMALE;
 		if ((*target).nation == ARDESIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_ARD));
-			strcpy(lname, extract_from_list(LIST_LAST_ARD));
+			if (take_chance(0.1)) {
+				strcpy(lname, "Mc");
+			} else strcpy(lname, "");
+			strcat(lname, extract_from_list(LIST_LAST_ARD));
 		} else if ((*target).nation == SLEBRIAN) {
 			strcpy(fname, extract_from_list(LIST_FIRST_FEMALE_SLE));
 			strcpy(lname, extract_from_list(LIST_LAST_SLE));

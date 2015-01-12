@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-w --std=c99 -O3
+CFLAGS=-w --std=c99 -g
 LIBS=-ldl -lssl -lcrypto
 OUT=murder-detective
 

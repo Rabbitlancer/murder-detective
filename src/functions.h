@@ -10,7 +10,7 @@ int rand_val ( int min, int max );
 t_nation return_nation ();
 char *nation_to_string( t_nation nat );
 char *gender_to_string( t_gender gnd );
-char *extract_from_list ( char *list_path );
+char *extract_from_list ( const char *list_path );
 void generate_person( person *target );
 char *describe_person( person *guy );
 
