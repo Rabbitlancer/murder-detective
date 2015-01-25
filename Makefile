@@ -3,7 +3,7 @@ CFLAGS=-w --std=c99 -g
 LIBS=-ldl -lssl -lcrypto
 OUT=murder-detective
 
-.PHONY=all clean
+.PHONY=run
 
 functions.o: src/functions.c
 	$(CC) src/functions.c $(CFLAGS) $(LIBS) -c -o src/functions.o
@@ -11,8 +11,8 @@ functions.o: src/functions.c
 all: functions.o
 	$(CC) src/functions.o src/murder-detective.c $(CFLAGS) $(LIBS) -o $(OUT)
 
-clean:
+clean: all
 	rm src/*.o
 
-run:
+run: clean
 	./$(OUT)

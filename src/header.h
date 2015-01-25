@@ -45,4 +45,12 @@ typedef struct {
 #define LIST_FIRST_FEMALE_SIN "lists/first_females_sinpouri.lst"
 #define LIST_LAST_SIN "lists/last_sinpouri.lst"
 
+#define FLAG_NAMERULE_COMMON 1
+#define FLAG_NAMERULE_LASTNAME 2
+#define FLAG_NAMERULE_SLEBRIAN 4
+#define FLAG_NAMERULE_TOTNAN 8
+#define FLAG_NAMERULE_USSAIRIC 16
+#define FLAG_NAMERULE_SINPOURI 32
+#define FULLFLAG 255
+
 #endif
