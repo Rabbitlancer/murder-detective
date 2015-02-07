@@ -3,9 +3,11 @@
 
 //person sample_guy = { "John", "Doe", ARDESIAN, MALE };
 person *population = NULL;
+street *city = NULL;
 
 void on_exit () {
 	if (population != NULL) free(population);
+	if (city != NULL) free(city);
 }
 
 int main(int argc, char const *argv[]) {

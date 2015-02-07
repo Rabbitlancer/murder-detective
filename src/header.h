@@ -24,7 +24,25 @@ typedef struct {
 	char last_name[20];
 	t_nation nation;
 	t_gender gender;
+	unsigned char age;
 } person;
+
+typedef struct {
+	unsigned char occ_number;
+	person *occupants;
+} flat;
+
+typedef struct {
+	unsigned char flat_number;
+	flat *flats;
+} house;
+
+typedef struct strt {
+	char street_name[20];
+	unsigned char house_number;
+	house *houses;	
+	struct strt **intersects;
+} street;
 
 #define LIST_FIRST_MALE_ARD "lists/first_males_ardesian.lst"
 #define LIST_FIRST_FEMALE_ARD "lists/first_females_ardesian.lst"

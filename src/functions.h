@@ -15,6 +15,9 @@ int check_flag ( char flags, const char sample );
 char *expand_string( char *str, int pos );
 void mess_up_with_name( char *name, const char flags );
 void generate_person( person *target );
+void generate_flat ( flat *flt );
+void generate_house ( house *hs );
+void generate_street( street *stt );
 char *describe_person( person *guy );
 
 #endif

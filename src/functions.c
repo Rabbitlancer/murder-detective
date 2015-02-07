@@ -144,6 +144,16 @@ void mess_up_with_name( char *name, const char flags ) {
 						}
 					}
 				break;
+				case 'x':
+					if (check_flag(flags, FLAG_NAMERULE_SLEBRIAN)) {
+						if (take_chance(0.5)) {
+							strcpy(name,expand_string(name,i));
+							name[i]='k';
+							i++;
+							name[i]='s';
+						}
+					}
+				break;
 				default:;
 				break;
 			}
@@ -153,6 +163,7 @@ void mess_up_with_name( char *name, const char flags ) {
 }
 
 void generate_person( person *target ) { //creates a random person
+	target->age = rand_val(10,80);
 	target->nation = return_nation();
 	char *fname = NULL;
 	fname=(char *)calloc(20,sizeof(char));
@@ -231,14 +242,75 @@ void generate_person( person *target ) { //creates a random person
 	strcpy(target->last_name,lname);
 }
 
+void generate_flat ( flat *flt ) {
+	flt->occ_number = rand_val(1,5);
+	flt->occupants = (person *)calloc(flt->occ_number,sizeof(person));
+	if (flt->occupants == NULL) {
+		exit(-1);
+	}
+	for (int i = 0; i<(flt->occ_number); i++) {
+		generate_person(&(flt->occupants[i]));
+	}
+}
+
+void generate_house ( house *hs ) {
+	hs->flat_number = rand_val(1,5);
+	hs->flats = (flat *)calloc(hs->flat_number,sizeof(flat));
+	if (hs->flats == NULL) {
+		exit(-1);
+	}
+	for (int i = 0; i<(hs->flat_number); i++) {
+		generate_flat(&(hs->flats[i]));
+	}
+}
+
+void generate_street( street *stt ) {
+	if (take_chance(0.7)) {
+		strcpy(stt->street_name,extract_from_list(LIST_LAST_ARD));
+		strcat(stt->street_name," St.");
+	} else if (take_chance(0.5)) {
+		strcpy(stt->street_name,extract_from_list(LIST_LAST_ARD));
+		strcat(stt->street_name," Sq.");
+	} else {
+		unsigned char num = rand_val(1,11);
+		char postf[5];
+		switch (num) {
+			case 1:
+				strcpy(postf,"st");
+			break;
+			case 2:
+				strcpy(postf,"nd");
+			break;
+			case 3:
+				strcpy(postf,"rd");
+			break;
+			default:
+				strcpy(postf,"th");
+			break;
+		}
+		sprintf(stt->street_name,"%d%s Ave", num, postf);
+	}
+	stt->house_number = rand_val(5,100);
+	stt->houses = (house *)calloc(stt->house_number,sizeof(flat));
+	if (stt->houses == NULL) {
+		exit(-1);
+	}
+}
+
 char *describe_person( person *guy ) { //makes an output string out of person (like "John Doe, Ardesian male")
 	char *str = NULL;
+	char article[2];
 
 	str = (char *)calloc(100,sizeof(char));
 	if (str == NULL) {
 		exit(-1);
 	}
 
-	sprintf(str,"%s %s, %s %s",guy->first_name,guy->last_name, nation_to_string(guy->nation), gender_to_string(guy->gender));
+	if (((guy->nation) == ARDESIAN) || ((guy->nation) == USSAIRIC))
+		strcpy(article,"an");
+	else
+		strcpy(article,"a");
+
+	sprintf(str,"%s %s is %s %s %s, %d years old",guy->first_name,guy->last_name, article, nation_to_string(guy->nation), gender_to_string(guy->gender), guy->age);
 	return str;
 }
