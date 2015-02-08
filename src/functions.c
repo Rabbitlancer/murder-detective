@@ -242,29 +242,24 @@ void generate_person( person *target ) { //creates a random person
 	strcpy(target->last_name,lname);
 }
 
-void generate_flat ( flat *flt ) {
-	flt->occ_number = rand_val(1,5);
-	flt->occupants = (person *)calloc(flt->occ_number,sizeof(person));
-	if (flt->occupants == NULL) {
-		exit(-1);
-	}
-	for (int i = 0; i<(flt->occ_number); i++) {
-		generate_person(&(flt->occupants[i]));
-	}
+void generate_flat ( flat *flt, unsigned char id ) {
+	flt->flat_id = id;
 }
 
-void generate_house ( house *hs ) {
+void generate_house ( house *hs, unsigned char id ) {
 	hs->flat_number = rand_val(1,5);
+	hs->house_id = id;
 	hs->flats = (flat *)calloc(hs->flat_number,sizeof(flat));
 	if (hs->flats == NULL) {
 		exit(-1);
 	}
 	for (int i = 0; i<(hs->flat_number); i++) {
-		generate_flat(&(hs->flats[i]));
+		generate_flat(&(hs->flats[i]), i);
 	}
 }
 
-void generate_street( street *stt ) {
+void generate_street( street *stt, unsigned char id ) {
+	stt->street_id = id;
 	if (take_chance(0.7)) {
 		strcpy(stt->street_name,extract_from_list(LIST_LAST_ARD));
 		strcat(stt->street_name," St.");
@@ -295,13 +290,16 @@ void generate_street( street *stt ) {
 	if (stt->houses == NULL) {
 		exit(-1);
 	}
+	for (int i = 0; i<(stt->house_number); i++) {
+		generate_house(&(stt->houses[i]),i);
+	}
 }
 
 char *describe_person( person *guy ) { //makes an output string out of person (like "John Doe, Ardesian male")
 	char *str = NULL;
 	char article[2];
 
-	str = (char *)calloc(100,sizeof(char));
+	str = (char *)calloc(256,sizeof(char));
 	if (str == NULL) {
 		exit(-1);
 	}
@@ -311,6 +309,6 @@ char *describe_person( person *guy ) { //makes an output string out of person (l
 	else
 		strcpy(article,"a");
 
-	sprintf(str,"%s %s is %s %s %s, %d years old",guy->first_name,guy->last_name, article, nation_to_string(guy->nation), gender_to_string(guy->gender), guy->age);
+	sprintf(str,"%s %s is %s %s %s, %d years old, living at %d %s, apartment %d",guy->first_name,guy->last_name, article, nation_to_string(guy->nation), gender_to_string(guy->gender), guy->age, guy->home_address.house_id, guy->home_address.street_name, guy->home_address.flat_id+1);
 	return str;
 }

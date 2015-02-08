@@ -20,29 +20,37 @@ typedef enum {
 } t_gender;
 
 typedef struct {
-	char first_name[20];
-	char last_name[20];
-	t_nation nation;
-	t_gender gender;
-	unsigned char age;
-} person;
-
-typedef struct {
-	unsigned char occ_number;
-	person *occupants;
+	unsigned char flat_id;
 } flat;
 
 typedef struct {
-	unsigned char flat_number;
+	unsigned char flat_number, house_id;
 	flat *flats;
 } house;
 
 typedef struct strt {
 	char street_name[20];
 	unsigned char house_number;
+	unsigned char street_id;
 	house *houses;	
 	struct strt **intersects;
 } street;
+
+typedef struct {
+	unsigned char flat_id;
+	unsigned char house_id;
+	unsigned char street_id;
+	char street_name[20];
+} address;
+
+typedef struct {
+	char first_name[20];
+	char last_name[20];
+	t_nation nation;
+	t_gender gender;
+	unsigned char age;
+	address home_address;
+} person;
 
 #define LIST_FIRST_MALE_ARD "lists/first_males_ardesian.lst"
 #define LIST_FIRST_FEMALE_ARD "lists/first_females_ardesian.lst"
@@ -70,5 +78,8 @@ typedef struct strt {
 #define FLAG_NAMERULE_USSAIRIC 16
 #define FLAG_NAMERULE_SINPOURI 32
 #define FULLFLAG 255
+
+#define STREETS 10
+#define PEOPLE 100
 
 #endif
